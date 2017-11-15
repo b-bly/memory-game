@@ -1,3 +1,4 @@
+// made with some code copied from https://www.w3schools.com/graphics/game_components.asp
 
 const CARD_WIDTH = '30'; //each card is a square.  unit is pixels
 const CARD_COLOR = 'gray';
@@ -5,6 +6,9 @@ const BOARD_X = 0; //starting position of first card in upper left corner of boa
 const BOARD_Y = 0;
 const CARD_MARGIN = 2; // margin between cards
 const BOARD_WIDTH = 2; //number of cards on one side of the board
+
+//Shapes
+
 
 //draw the board--squares to represent the back side of cards.
 function drawBoard() {
@@ -40,7 +44,8 @@ const myGameArea = {
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
+        //this.interval = setInterval(updateGameArea, 20);
+        updateGameArea();
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
