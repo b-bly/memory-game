@@ -1,5 +1,8 @@
 // made with some code copied from https://www.w3schools.com/graphics/game_components.asp
 
+//opening index
+//file:///Users/other/dev%20projects/memory-game/index.html
+
 //Next steps:
 //shapes
 //make a shapes class
@@ -10,16 +13,18 @@
 //when a card is clicked, search the array for the shape that matches the x, y
 
 //baby steps:
-    //1. draw shape at x, y = 0, 0
-    //2. fill board with shapes
-    //3. randomize
-    //4. appear only on mouse up
-    //5. card lightens on mouse hover
-    //6. if cards match, clear and update score
-    //if not, turn over again.
-    //7. if all cards are gone, call game over function.
-    //8. option to play again.
-    //9.  give user option to change board size.
+//x 1. draw shape at x, y = 0, 0
+//need a transform function that moves smilies to the square they're supposed to be.
+//pass color to update function?  To get different color shapes.
+//2. fill board with shapes
+//3. randomize
+//4. appear only on mouse up
+//5. card lightens on mouse hover
+//6. if cards match, clear and update score
+//if not, turn over again.
+//7. if all cards are gone, call game over function.
+//8. option to play again.
+//9.  give user option to change board size.
 
 //Constants
 const CARD_WIDTH = '30'; //each card is a square.  unit is pixels
@@ -80,16 +85,76 @@ const myGameArea = {
 const diamond = {
     update: function () {
         //if (myGameArea.context) {
-            let ctx = myGameArea.context;
-            ctx.beginPath();
-            ctx.moveTo(2, 16);
-            ctx.lineTo(14, 28);
-            ctx.lineTo(28, 16);
-            ctx.lineTo(16, 2);
-            ctx.fill();
+        let ctx = myGameArea.context;
+        ctx.transform(1, 0, 0, 1, 2, 2);
+        ctx.beginPath();
+        ctx.moveTo(0, 14);
+        ctx.lineTo(14, 28);
+        ctx.lineTo(28, 14);
+        ctx.lineTo(14, 0);
+        ctx.lineTo(0, 14);
+        ctx.fill();
         //}
     }
 }
+
+const diamondStroke = {
+    update: function () {
+        //if (myGameArea.context) {
+        let ctx = myGameArea.context;
+        ctx.transform(1, 0, 0, 1, 2, 2);
+        ctx.beginPath();
+        ctx.moveTo(0, 14);
+        ctx.lineTo(14, 28);
+        ctx.lineTo(28, 14);
+        ctx.lineTo(14, 0);
+        ctx.lineTo(0, 14);
+        ctx.stroke();
+        //}
+    }
+}
+
+const smiley = {
+    update: function () {
+        let ctx = myGameArea.context;
+        //transform method lets you just move the object, so I don't need to add 2 pixels to each parameter
+        ctx.transform(1, 0, 0, 1, 2, 2);
+        ctx.beginPath();
+        ctx.arc(14, 14, 14, 0, Math.PI * 2, true); // Outer circle
+        ctx.moveTo(25, 14);
+        ctx.arc(14, 14, 10, 0, Math.PI, false);  // Mouth (clockwise)
+        ctx.moveTo(8, 9);
+        ctx.arc(7, 9, 1, 0, Math.PI * 2, true);  // Left eye
+        ctx.moveTo(19, 9);
+        ctx.arc(20, 9, 1, 0, Math.PI * 2, true);  // Right eye
+        ctx.stroke();
+    }
+}
+
+const circle = {
+    update: function () {
+        let ctx = myGameArea.context;
+        //transform method lets you just move the object, so I don't need to add 2 pixels to each parameter
+        ctx.transform(1, 0, 0, 1, 2, 2);
+        ctx.beginPath();
+        ctx.arc(14, 14, 14, 0, Math.PI * 2, true); // Outer circle
+        ctx.stroke()
+    }
+}
+
+const circleFilled = {
+    update: function () {
+        let ctx = myGameArea.context;
+        //transform method lets you just move the object, so I don't need to add 2 pixels to each parameter
+        ctx.transform(1, 0, 0, 1, 2, 2);
+        ctx.beginPath();
+        ctx.arc(14, 14, 14, 0, Math.PI * 2, true); // Outer circle
+        ctx.fill()
+    }
+}
+//arc parameters:
+//center x, y, radius, starting angle, final angle radians, clockwise = true;
+
 // const triangle;
 // const pacman;
 // const diamond;
@@ -112,5 +177,5 @@ const diamond = {
 function updateGameArea() {
     myGameArea.clear();
     //drawBoard();
-    diamond.update();
+    circleFilled.update();
 }
