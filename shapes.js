@@ -33,7 +33,7 @@ const diamondStroke = {
     update: function (coordinates, color) {
         //if (myGameArea.context) {
         let ctx = myGameArea.context;
-        ctx.save();        
+        ctx.save();
         ctx.transform(1, 0, 0, 1, 2 + coordinates[0], 2 + coordinates[1]);
         ctx.beginPath();
         ctx.moveTo(0, 14);
@@ -85,7 +85,7 @@ const circle = {
 const circleFilled = {
     update: function (coordinates, color) {
         let ctx = myGameArea.context;
-        ctx.save();        
+        ctx.save();
         //transform method lets you just move the object, so I don't need to add 2 pixels to each parameter
         ctx.transform(1, 0, 0, 1, 2 + coordinates[0], 2 + coordinates[1]);
         ctx.beginPath();
@@ -121,16 +121,16 @@ function createGameShapes() {
             random = Math.floor(Math.random() * numberCards);
         }
         randomArray.push(random);
-    }  
+    }
     for (let i = 0; i < numberCards; i++) {
-        //const random = randomArray[i];
-        const shape = shapesAndColors[i];
-        const x = ((i) % BOARD_WIDTH) * CARD_WIDTH + CARD_MARGIN; //5 - 1 % 5 = 4
+        const random = randomArray[i];
+        let shape = shapesAndColors[random];
+        const x = ((i) % BOARD_WIDTH) * CARD_WIDTH + ((i) % BOARD_WIDTH) * CARD_MARGIN; //5 - 1 % 5 = 4
         //RANDOM = 5: 5 - 1 / 5  = 0
         //random = 9: 11 - 1/ 5 = 2
-        const y = (Math.floor((i) / BOARD_WIDTH)) * CARD_WIDTH + CARD_MARGIN;
+        const y = (Math.floor((i) / BOARD_WIDTH)) * CARD_WIDTH + (Math.floor((i) / BOARD_WIDTH)) * CARD_MARGIN;
         shape.coordinates = [x, y];
-        console.log(shape.coordinates);
+        //console.log(shape.coordinates);
         gameShapes.push(shape);
     }
 }
