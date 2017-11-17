@@ -15,13 +15,13 @@
 
 //baby steps:
 //x 1. draw shape at x, y = 0, 0
-//need a transform function that moves smilies to the square they're supposed to be.
-//pass color to update function?  To get different color shapes.
-//store shapes to be displayed in clickedShapesArray
-//each mouse click event, add a shape object to array of shapes that will be shown (max 2);
-//after 2nd click, clear the clickedShapesArray
-//2. fill board with shapes
-//3. randomize
+    //need a transform function that moves smilies to the square they're supposed to be.
+    //pass color to update function?  To get different color shapes.
+    //store shapes to be displayed in clickedShapesArray
+    //each mouse click event, add a shape object to array of shapes that will be shown (max 2);
+    //after 2nd click, clear the clickedShapesArray
+//x 2. fill board with shapes
+//x 3. randomize
 //push shape objects to an array in random order.
 //add color property--store in object with color list for each shape:
 //const colorsByShape = {
@@ -39,7 +39,7 @@
 
 //window.onload = function () {
 //Constants
-const CARD_WIDTH = '30'; //each card is a square.  unit is pixels
+const CARD_WIDTH = 30; //each card is a square.  unit is pixels
 const CARD_COLOR = 'gray';
 const BOARD_X = 0; //starting position of first card in upper left corner of board
 const BOARD_Y = 0;
@@ -53,14 +53,17 @@ function drawBoard() {
     for (let j = 0; j < BOARD_WIDTH; j++) {
         let offsetY = j * CARD_WIDTH;
         if (j > 0) {
-            offsetY += 5;
+            offsetY += CARD_MARGIN * j;
         }
         for (let i = 0; i < BOARD_WIDTH; i++) {
             ctx.fillStyle = CARD_COLOR;
             let offsetX = i * CARD_WIDTH;
             if (i > 0) {
-                offsetX += 5;
+                offsetX += CARD_MARGIN * i;
             }
+            console.log('drawBoard: offsetX: ');
+            console.log(offsetX);
+            
             ctx.fillRect(BOARD_X + offsetX, BOARD_Y + offsetY, CARD_WIDTH, CARD_WIDTH);
         }
     }
@@ -71,19 +74,23 @@ function startGame() {
     myGameArea.start();
 }
 
-const myGameArea = {
+let myGameArea = {
     canvas: document.createElement("canvas"),
     start: function () {
         this.canvas.width = 480;
         this.canvas.height = 270;
+        this.canvas.style.cursor = "none";
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        window.addEventListener('mousemove', function (e) {
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        })
         createShapesAndColors();
         createGameShapes();
+        drawBoard();
         console.log(gameShapes);
-
         //this.interval = setInterval(updateGameArea, 20);
-        updateGameArea();
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -104,9 +111,9 @@ const myGameArea = {
 
 function updateGameArea() {
     myGameArea.clear();
-    gameShapes.forEach((shape, i) => {
-        shape.update(shape.coordinates, shape.color);
-    });
-    //drawBoard();
+    // gameShapes.forEach((shape, i) => {
+    //     shape.update(shape.coordinates, shape.color);
+    // });
+    drawBoard();
 }
 //}
