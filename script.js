@@ -1,3 +1,4 @@
+
 // made with some code copied from https://www.w3schools.com/graphics/game_components.asp
 
 //opening index
@@ -16,8 +17,18 @@
 //x 1. draw shape at x, y = 0, 0
 //need a transform function that moves smilies to the square they're supposed to be.
 //pass color to update function?  To get different color shapes.
+//store shapes to be displayed in clickedShapesArray
+//each mouse click event, add a shape object to array of shapes that will be shown (max 2);
+//after 2nd click, clear the clickedShapesArray
 //2. fill board with shapes
 //3. randomize
+//push shape objects to an array in random order.
+//add color property--store in object with color list for each shape:
+//const colorsByShape = {
+// diamond: ['red', 'orange', ...]
+//    }
+//then give them a coordinates property (0, 0) for the first card, etc.
+//the draw function will need to multiply by card width + CARD_MARGIN to get the correct coordinates
 //4. appear only on mouse up
 //5. card lightens on mouse hover
 //6. if cards match, clear and update score
@@ -26,13 +37,14 @@
 //8. option to play again.
 //9.  give user option to change board size.
 
+//window.onload = function () {
 //Constants
 const CARD_WIDTH = '30'; //each card is a square.  unit is pixels
 const CARD_COLOR = 'gray';
 const BOARD_X = 0; //starting position of first card in upper left corner of board
 const BOARD_Y = 0;
 const CARD_MARGIN = 2; // margin between cards
-const BOARD_WIDTH = 2; //number of cards on one side of the board
+const BOARD_WIDTH = 5; //number of cards on one side of the board
 const SHAPE_PADDING = 2;
 
 
@@ -57,7 +69,7 @@ function drawBoard() {
     }
 }
 
-let myGamePiece;
+
 //startGame called in html body
 function startGame() {
 
@@ -71,6 +83,10 @@ const myGameArea = {
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        createShapesAndColors();
+        createGameShapes();
+        console.log(gameShapes);
+
         //this.interval = setInterval(updateGameArea, 20);
         updateGameArea();
     },
@@ -78,89 +94,6 @@ const myGameArea = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
-
-//Shapes
-//draw in a 26 x 26 area centered in the 30 x 30 sqare for 4 px of padding
-//from 2 to 28
-const diamond = {
-    update: function () {
-        //if (myGameArea.context) {
-        let ctx = myGameArea.context;
-        ctx.transform(1, 0, 0, 1, 2, 2);
-        ctx.beginPath();
-        ctx.moveTo(0, 14);
-        ctx.lineTo(14, 28);
-        ctx.lineTo(28, 14);
-        ctx.lineTo(14, 0);
-        ctx.lineTo(0, 14);
-        ctx.fill();
-        //}
-    }
-}
-
-const diamondStroke = {
-    update: function () {
-        //if (myGameArea.context) {
-        let ctx = myGameArea.context;
-        ctx.transform(1, 0, 0, 1, 2, 2);
-        ctx.beginPath();
-        ctx.moveTo(0, 14);
-        ctx.lineTo(14, 28);
-        ctx.lineTo(28, 14);
-        ctx.lineTo(14, 0);
-        ctx.lineTo(0, 14);
-        ctx.stroke();
-        //}
-    }
-}
-
-const smiley = {
-    update: function () {
-        let ctx = myGameArea.context;
-        //transform method lets you just move the object, so I don't need to add 2 pixels to each parameter
-        ctx.transform(1, 0, 0, 1, 2, 2);
-        ctx.beginPath();
-        ctx.arc(14, 14, 14, 0, Math.PI * 2, true); // Outer circle
-        ctx.moveTo(25, 14);
-        ctx.arc(14, 14, 10, 0, Math.PI, false);  // Mouth (clockwise)
-        ctx.moveTo(8, 9);
-        ctx.arc(7, 9, 1, 0, Math.PI * 2, true);  // Left eye
-        ctx.moveTo(19, 9);
-        ctx.arc(20, 9, 1, 0, Math.PI * 2, true);  // Right eye
-        ctx.stroke();
-    }
-}
-
-const circle = {
-    update: function () {
-        let ctx = myGameArea.context;
-        //transform method lets you just move the object, so I don't need to add 2 pixels to each parameter
-        ctx.transform(1, 0, 0, 1, 2, 2);
-        ctx.beginPath();
-        ctx.arc(14, 14, 14, 0, Math.PI * 2, true); // Outer circle
-        ctx.stroke()
-    }
-}
-
-const circleFilled = {
-    update: function () {
-        let ctx = myGameArea.context;
-        //transform method lets you just move the object, so I don't need to add 2 pixels to each parameter
-        ctx.transform(1, 0, 0, 1, 2, 2);
-        ctx.beginPath();
-        ctx.arc(14, 14, 14, 0, Math.PI * 2, true); // Outer circle
-        ctx.fill()
-    }
-}
-//arc parameters:
-//center x, y, radius, starting angle, final angle radians, clockwise = true;
-
-// const triangle;
-// const pacman;
-// const diamond;
-// const heart;
-
-
 
 // function component(width, height, color, x, y) {
 //     this.width = width;
@@ -176,6 +109,9 @@ const circleFilled = {
 
 function updateGameArea() {
     myGameArea.clear();
+    gameShapes.forEach((shape, i) => {
+        shape.update(shape.coordinates, shape.color);
+    });
     //drawBoard();
-    circleFilled.update();
 }
+//}
