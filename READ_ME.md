@@ -34,9 +34,15 @@
 //properties:
 //x
 //y
+show: true /false if clicked on, show the shape
+removed: true / false
+
 //methods:
 //draw - draw the card
 //clicked: detect a mouseup
+
+need a variable (in gameArea ?) to keep track of number of clicks.
+Don't count the second click if it's a card that's already clicked show = true.
 
 //5. card lightens on mouse hover
 //6. if cards match, clear and update score

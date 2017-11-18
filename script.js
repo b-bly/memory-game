@@ -12,8 +12,11 @@ const SHAPE_PADDING = 2;
 function drawBoard() {
     let ctx = myGameArea.context;
     gameShapes.forEach((currentCard, i) => {
-        ctx.fillStyle = CARD_COLOR;
-        ctx.fillRect(currentCard.x, currentCard.y, CARD_WIDTH, CARD_WIDTH);
+        if (currentCard.show == false) {
+            currentCard.drawCard();
+        } else {
+            currentCard.drawShape();
+        }
     });
 }
 
@@ -27,14 +30,14 @@ let myGameArea = {
     start: function () {
         this.canvas.width = 480;
         this.canvas.height = 270;
-        this.canvas.style.cursor = "none";
+        //this.canvas.style.cursor = "none";
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         window.addEventListener('mouseup', function (e) {
-            myGameArea.x = false;
-            myGameArea.y = false;
-        })
-        //this.interval = setInterval(updateGameArea, 20);
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        });
+        this.interval = setInterval(updateGameArea, 20);
 
         //initialize
         initializeGame();
@@ -57,7 +60,19 @@ function initializeGame() {
 
 function updateGameArea() {
     myGameArea.clear();
+
+    // need a variable (in gameArea ?) to keep track of number of clicks.
+    // Don't count the second click if it's a card that's already clicked show = true.
+
     //if card is clicked once ...
+    if (myGameArea.x && myGameArea.y) {
+        gameShapes.forEach((shape, i) => {
+            if (shape.clicked() == true) {
+                shape.show = true;
+            }
+        });
+    }
+    drawBoard();
     //if card is clicked the 2nd time...
 }
 //}
