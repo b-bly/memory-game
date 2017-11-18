@@ -8,6 +8,37 @@ const CARD_MARGIN = 10; // margin between cards
 const BOARD_WIDTH = 4; //number of cards on one side of the board
 const SHAPE_PADDING = 2;
 
+
+let myGameArea = {
+    canvas: document.createElement("canvas"),
+    start: function () {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        //this.canvas.style.cursor = "none";
+        this.context = this.canvas.getContext("2d");
+        this.cardsShown = 0;
+        this.interval = setInterval(() => {
+            if (!this.pause) {
+                updateGameArea();
+            }
+        }, 100);
+        this.pause = false;
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        window.addEventListener('mouseup', function (e) {
+            myGameArea.x = e.pageX;
+            myGameArea.y = e.pageY;
+        });
+        
+
+        //initialize
+        initializeGame();
+        //console.log(gameShapes); 
+    },
+    clear: function () {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
 //draw the board--squares to represent the back side of cards.
 function drawBoard() {
     let ctx = myGameArea.context;
@@ -19,7 +50,6 @@ function drawBoard() {
                 currentCard.drawShape();
                 console.log('drawBoard, show == true');
                 console.log(currentCard);
-
             }
         }
     });
@@ -30,29 +60,6 @@ function startGame() {
     myGameArea.start();
 }
 
-let myGameArea = {
-    canvas: document.createElement("canvas"),
-    start: function () {
-        this.canvas.width = 480;
-        this.canvas.height = 270;
-        //this.canvas.style.cursor = "none";
-        this.context = this.canvas.getContext("2d");
-        this.cardsShown = 0;
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        window.addEventListener('mouseup', function (e) {
-            myGameArea.x = e.pageX;
-            myGameArea.y = e.pageY;
-        });
-        this.interval = setInterval(updateGameArea, 100);
-
-        //initialize
-        initializeGame();
-        //console.log(gameShapes); 
-    },
-    clear: function () {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
 
 function initializeGame() {
     createGameShapes();
@@ -89,6 +96,7 @@ function updateGameArea() {
 
 
     if (myGameArea.cardsShown > 1) {
+        myGameArea.pause = true;
         //if it's a match
         myGameArea.cardsShown = 0;
         let firstCard = {};
@@ -123,6 +131,7 @@ function updateGameArea() {
 
                 }
             });
+            myGameArea.pause = false;
         }, 1000);
     }
     drawBoard();
