@@ -6,6 +6,8 @@ class Diamond extends Card {
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
+        this.type = 'diamond';
+        
     }
     drawShape () {
         //if (myGameArea.context) {
@@ -34,6 +36,8 @@ class DiamondStroke extends Card {
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
+        this.type = 'diamondStroke';
+        
     }
     drawShape() {
         //if (myGameArea.context) {
@@ -57,6 +61,8 @@ class Smiley extends Card {
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
+        this.type = 'smiley';
+        
     }
     drawShape () {
         //if (myGameArea.context) {
@@ -81,6 +87,8 @@ class Circle extends Card {
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
+        this.type = 'circle';
+        
     }
     drawShape() {
         //if (myGameArea.context) {
@@ -99,6 +107,7 @@ class CircleFilled extends Card {
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
+        this.type = 'circleFilled';
     }
     drawShape() {
         //if (myGameArea.context) {
