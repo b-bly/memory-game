@@ -5,7 +5,7 @@ const CARD_COLOR = 'gray';
 const BOARD_X = 0; //starting position of first card in upper left corner of board
 const BOARD_Y = 0;
 const CARD_MARGIN = 10; // margin between cards
-const BOARD_WIDTH = 5; //number of cards on one side of the board
+const BOARD_WIDTH = 4; //number of cards on one side of the board
 const SHAPE_PADDING = 2;
 
 //draw the board--squares to represent the back side of cards.
@@ -58,7 +58,6 @@ function initializeGame() {
     createGameShapes();
     //createCards();
     drawBoard();
-
     // gameShapes.forEach((shape, i) => {
     //     shape.drawShape();
     // });

@@ -6,19 +6,27 @@ let gameShapes = [];
 //BOARD_WIDTH is number of cards in one row
 
 function createGameShapes() {
-    let numberCards = BOARD_WIDTH * BOARD_WIDTH;
+    const numberCards = BOARD_WIDTH * BOARD_WIDTH;
     let randomArray = [];
-    const numberOfAllPossibleCards = shapes.length * colors.length;
-    for (let i = 0; i < numberCards; i++) {
+    let numberOfAllPossibleCards = shapes.length * colors.length;
+    if (numberCards % 2 != 0) {
+        console.log('Error: odd number of cards');
+    }
+    //this makes the number of pairs we need
+    for (let i = 0; i < numberCards / 2; i++) {
         let random = Math.floor(Math.random() * numberOfAllPossibleCards);
         while (randomArray.includes(random) === true) {
             random = Math.floor(Math.random() * numberOfAllPossibleCards);
         }
         randomArray.push(random);
     }
-    console.log('random array: ');
-    console.log(randomArray);
-    
+    //shuffle in the pair of each card:
+    const length = randomArray.length;    
+    randomArray.forEach((number) => {
+        let random = randomArray[Math.floor(Math.random() * length)];
+        randomArray.push(random);
+    });
+
     for (let i = 0; i < numberCards; i++) {
         const random = randomArray[i];
         let shape = {};
@@ -26,7 +34,7 @@ function createGameShapes() {
         const shapeType = shapes[Math.floor(random / colors.length)];
         const x = ((i) % BOARD_WIDTH) * CARD_WIDTH + ((i) % BOARD_WIDTH) * CARD_MARGIN; //5 - 1 % 5 = 4
         const y = (Math.floor((i) / BOARD_WIDTH)) * CARD_WIDTH + (Math.floor((i) / BOARD_WIDTH)) * CARD_MARGIN;
-    
+
         switch (shapeType) {
             case 'diamond':
                 shape = new Diamond(x, y, color);
@@ -47,7 +55,6 @@ function createGameShapes() {
                 shape = {};
                 console.log('ERROR shapes.js: createGameShapes: no shape assigned');
                 break;
-
         }
         gameShapes.push(shape);
     }
