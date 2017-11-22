@@ -1,10 +1,9 @@
 class Card {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        this.x = x + OFFSET_X; 
+        this.y = y + OFFSET_Y; 
         this.show = false;
-        this.removed = false;
-        
+        this.removed = false;       
     }
     drawCard () {
         let ctx = myGameArea.context;

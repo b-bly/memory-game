@@ -62,36 +62,3 @@ function createGameShapes() {
     console.log(gameShapes);
 
 }
-// function createShapesAndColors() {
-//     shapesAndColors = [];
-//     shapes.forEach((shape, i) => {
-//         colors.forEach((color, j) => {
-//             let shapeCopy = Object.assign({}, shape);
-//             shapeCopy.color = color;
-//             shapesAndColors.push(shapeCopy);
-//         });
-//     });
-// }
-
-// function createGameShapes() {
-//     let numberCards = BOARD_WIDTH * BOARD_WIDTH;
-//     let randomArray = [];
-//     for (let i = 0; i < numberCards; i++) {
-//         let random = Math.floor(Math.random() * numberCards);
-//         while (randomArray.includes(random) === true) {
-//             random = Math.floor(Math.random() * numberCards);
-//         }
-//         randomArray.push(random);
-//     }
-//     for (let i = 0; i < numberCards; i++) {
-//         const random = randomArray[i];
-//         let shape = shapesAndColors[random];
-//         const x = ((i) % BOARD_WIDTH) * CARD_WIDTH + ((i) % BOARD_WIDTH) * CARD_MARGIN; //5 - 1 % 5 = 4
-//         //RANDOM = 5: 5 - 1 / 5  = 0
-//         //random = 9: 11 - 1/ 5 = 2
-//         const y = (Math.floor((i) / BOARD_WIDTH)) * CARD_WIDTH + (Math.floor((i) / BOARD_WIDTH)) * CARD_MARGIN;
-//         shape.coordinates = [x, y];
-//         //console.log(shape.coordinates);
-//         gameShapes.push(shape);
-//     }
-// }
